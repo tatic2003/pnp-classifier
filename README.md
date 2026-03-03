@@ -1,149 +1,172 @@
-# PnP-AI Device Classifier
+<div align="center">
 
-A lightweight **IoT device type classifier** for Intelligent Transportation Systems (ITS), built with a neural network and a simple Streamlit interface.
+<!-- Banner -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C63FF,100:48C9B0&height=200&section=header&text=PnP%20Classifier&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Plug-and-Play%20AI%20Classifier&descAlignY=58&descSize=20" width="100%"/>
 
-This repository contains:
-- A Streamlit app for interactive inference.
-- A synthetic dataset generator for IoT/ITS devices.
-- Trained artifacts (`.keras`, scaler, and label encoder) for quick local demos.
+<br/>
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=for-the-badge&logo=jupyter&logoColor=white)](https://jupyter.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-MLP-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+
+<br/>
+
+> **A modular, Plug-and-Play MLP classifier pipeline — train once, swap anywhere.**
+
+</div>
 
 ---
 
-## What this project does
+## 🧩 What is PnP Classifier?
 
-Given a small set of device characteristics (memory, free memory ratio, CPU frequency, and network interfaces), the app predicts the most likely device class (for example: ESP32-based node, sensor, gateway, SBC).
+**PnP Classifier** is a lightweight, modular AI classification system built around a **Multi-Layer Perceptron (MLP)** architecture. The "Plug-and-Play" philosophy means you can easily swap datasets, features, or model components without rewriting your entire pipeline.
 
-The goal is to simulate a **Plug-and-Play onboarding flow** where unknown devices can be automatically profiled.
+It includes a synthetic data **generator**, a full **training notebook**, and a ready-to-use **web application** — making it ideal for rapid experimentation and prototyping.
 
 ---
 
-## Repository layout
+## ✨ Features
 
-```text
-.
-├── app.py                     # Streamlit inference UI
-├── generator.py               # Synthetic dataset generator
-├── requirements.txt           # Python dependencies
-├── mlp_classifier.ipynb       # Notebook used for experimentation/training
-├── artifacts_pnpai/
-│   ├── mlp_classifier.keras   # Trained neural network model
-│   ├── scaler.joblib          # Feature scaler
-│   └── label_encoder.joblib   # Output class encoder
-└── assets/                    # UI images used by Streamlit app
+- 🔌 **Plug-and-Play design** — modular components, easy to extend or replace
+- 🧠 **MLP Classifier** — neural network-based classification via scikit-learn
+- 🎲 **Synthetic data generator** — create custom datasets for testing and training
+- 🌐 **Interactive web app** — run inference through a clean UI (`app.py`)
+- 📓 **Jupyter Notebook** — step-by-step walkthrough of the full ML pipeline
+- 📦 **Clean dependencies** — minimal setup with `requirements.txt`
+
+---
+
+## 📁 Project Structure
+
+```
+pnp-classifier/
+│
+├── 📓 mlp_classifier.ipynb   # Full training & evaluation pipeline
+├── ⚙️  app.py                 # Web application for interactive inference
+├── 🎲 generator.py           # Synthetic dataset generator
+├── 📂 artifacts_pnpai/       # Saved model artifacts & outputs
+├── 🖼️  assets/               # Visual assets and resources
+└── 📋 requirements.txt       # Python dependencies
 ```
 
 ---
 
-## Quick start
+## 🚀 Getting Started
 
-### 1) Create and activate a virtual environment
+### 1. Clone the repository
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate   # Linux/macOS
+git clone https://github.com/tatic2003/pnp-classifier.git
+cd pnp-classifier
 ```
 
-On Windows (PowerShell):
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-### 2) Install dependencies
+### 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3) Run the app
+### 3. Generate synthetic data *(optional)*
 
 ```bash
-streamlit run app.py
+python generator.py
 ```
 
-Open the local URL shown in your terminal (usually `http://localhost:8501`).
+### 4. Train the model
 
----
+Open and run the notebook:
 
-## Using the classifier
-
-1. Open the app.
-2. Choose a quick profile (ESP32, Raspberry Pi, Jetson, Gateway, Sensor) or use Manual mode.
-3. Adjust hardware/network feature values.
-4. Click **“Clasificar dispositivo”** to get:
-   - Predicted class.
-   - Confidence score.
-   - Probability chart by class.
-
----
-
-## Synthetic data generation
-
-`generator.py` can generate realistic IoT/ITS datasets for training and testing.
-
-### Example: generate data for classification
-
-```python
-from generator import create_generator
-
-gen = create_generator(seed=42)
-features, labels = gen.generate_classification_dataset(
-    num_samples=1000,
-    include_anomalies=True,
-    anomaly_rate=0.1
-)
-
-print(len(features), len(labels))
-print(features[0], labels[0])
+```bash
+jupyter notebook mlp_classifier.ipynb
 ```
 
-### Example: export raw device records
+### 5. Launch the web app
 
-```python
-from generator import create_generator
-
-gen = create_generator(seed=42)
-devices = gen.generate_dataset(num_devices=500)
-gen.save_dataset(devices, "data/devices.json", format="json")
-gen.save_dataset(devices, "data/devices.csv", format="csv")
+```bash
+python app.py
 ```
 
 ---
 
-## ⚠️ Important note about model paths
+## 🧠 Model Overview
 
-The current `app.py` loads artifacts from **absolute Windows paths**. If you run this project in another environment, update `load_model()` to use repository-relative paths such as:
+The classifier uses a **Multi-Layer Perceptron (MLP)** — a feedforward neural network well-suited for tabular classification tasks.
 
-- `artifacts_pnpai/mlp_classifier.keras`
-- `artifacts_pnpai/scaler.joblib`
-- `artifacts_pnpai/label_encoder.joblib`
-
----
-
-## Dependencies
-
-Main libraries:
-- `streamlit`
-- `tensorflow` / `keras`
-- `pandas`
-- `numpy`
-- `joblib`
-
-See `requirements.txt` for the exact pinned versions.
+| Parameter        | Value              |
+|------------------|--------------------|
+| Model Type       | MLP Classifier     |
+| Framework        | scikit-learn       |
+| Input            | Feature vectors    |
+| Output           | Class predictions  |
+| Training         | Supervised learning|
 
 ---
 
-## Roadmap ideas
+## 🔧 How It Works
 
-- Replace absolute artifact paths with robust relative-path loading.
-- Add model version metadata to the UI.
-- Provide a training script (`train.py`) for reproducible retraining.
-- Add tests for feature preprocessing and inference pipeline.
-- Add Docker support for one-command deployment.
+```
+Raw Data / Generated Data
+        ↓
+  [ generator.py ]  ──── Creates synthetic training samples
+        ↓
+[ mlp_classifier.ipynb ] ── Preprocessing → Training → Evaluation
+        ↓
+  [ artifacts_pnpai/ ] ──── Saves trained model & metrics
+        ↓
+     [ app.py ] ──────────── Loads model → Serves predictions via UI
+```
 
 ---
 
-## Acknowledgment
+## 📊 Notebook Walkthrough
 
-Based on ITS-oriented synthetic profiling work described in the project comments (`PINV01-24 - FIUNA`).
+The `mlp_classifier.ipynb` notebook covers:
+
+1. 📥 Data loading and exploration
+2. 🔧 Feature preprocessing and normalization
+3. 🏋️ MLP model training
+4. 📈 Evaluation: accuracy, confusion matrix, classification report
+5. 💾 Model serialization for deployment
+
+---
+
+## 📦 Dependencies
+
+Key libraries used in this project:
+
+| Library         | Purpose                        |
+|-----------------|--------------------------------|
+| `scikit-learn`  | MLP model & metrics            |
+| `numpy`         | Numerical computing            |
+| `pandas`        | Data manipulation              |
+| `matplotlib`    | Visualization                  |
+| `gradio` / `streamlit` | Web app interface       |
+
+> See [`requirements.txt`](requirements.txt) for the full list.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+
+- 🐛 Open an issue for bugs or feature requests
+- 🍴 Fork the repo and submit a pull request
+- ⭐ Star the project if you find it useful!
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:48C9B0,100:6C63FF&height=100&section=footer" width="100%"/>
+
+Made with ❤️ by [tatic2003](https://github.com/tatic2003)
+
+</div>
