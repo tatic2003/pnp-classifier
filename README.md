@@ -8,7 +8,6 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=for-the-badge&logo=jupyter&logoColor=white)](https://jupyter.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-MLP-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 <br/>
 
@@ -67,13 +66,7 @@ cd pnp-classifier
 pip install -r requirements.txt
 ```
 
-### 3. Generate synthetic data *(optional)*
-
-```bash
-python generator.py
-```
-
-### 4. Train the model
+### 3. Generate the dataset and train the model (optional you can use ./artifacts_pnpai)
 
 Open and run the notebook:
 
@@ -84,7 +77,7 @@ jupyter notebook mlp_classifier.ipynb
 ### 5. Launch the web app
 
 ```bash
-python app.py
+streamlit run app.py
 ```
 
 ---
@@ -154,12 +147,6 @@ Contributions are welcome! Feel free to:
 - 🐛 Open an issue for bugs or feature requests
 - 🍴 Fork the repo and submit a pull request
 - ⭐ Star the project if you find it useful!
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
