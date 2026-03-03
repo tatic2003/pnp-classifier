@@ -19,7 +19,7 @@
 
 ## 🧩 What is PnP Classifier?
 
-**PnP Classifier** is a lightweight, modular AI classification system built around a **Multi-Layer Perceptron (MLP)** architecture. The "Plug-and-Play" philosophy means you can easily swap datasets, features, or model components without rewriting your entire pipeline.
+**PnP Classifier** is a lightweight, modular AI classification system built around a **Multi-Layer Perceptron (MLP)** architecture.
 
 It includes a synthetic data **generator**, a full **training notebook**, and a ready-to-use **web application** — making it ideal for rapid experimentation and prototyping.
 
